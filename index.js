@@ -19,7 +19,19 @@ const gpt = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-async function getInlineImagePart(image) {
+async function getInlineImagePart(image, model) {
+  if (model.includes("gpt")) {
+    if (image.startsWith("http")) {
+      return image;
+    } else if (image.includes(".") && fs.existsSync(image)) {
+      const base64Image = fs.readFileSync(image, "base64"); // no await
+
+      return `data:image/jpeg;base64,${base64Image}`;
+    }
+
+    return `data:image/jpeg;base64,${image}`;
+  }
+
   if (image.startsWith("http")) {
     const res = await fetch(image);
     const buffer = Buffer.from(await res.arrayBuffer());
@@ -160,6 +172,7 @@ async function useLLM({
   prompt,
   systemPrompt,
   image,
+  detail,
   video,
   audio,
   document,
@@ -171,46 +184,37 @@ async function useLLM({
         role: "user",
         content: [
           ...(prompt?.length > 0 ? [{ type: "text", text: prompt }] : []),
-          ...(image
+          ...(image?.length > 0
             ? [
                 {
                   type: "image_url",
                   image_url: {
-                    url: image.includes("http")
-                      ? image
-                      : `data:image/jpeg;base64,${fs.readFileSync(
-                          image,
-                          "base64"
-                        )}`,
+                    url: await getInlineImagePart(image, model),
+                    detail,
                   },
                 },
               ]
             : []),
-          ...(systemPrompt?.length > 0 && { config: systemInstruction }),
+          ...(audio?.length > 0 ? [await getInlineAudioPart(audio)] : []),
         ],
       },
     ];
-    // console.log(messages)
-    systemPrompt?.length > 0 &&
-      messages.unshift({ role: "system", content: systemPrompt });
 
     const response = await gpt.chat.completions.create({
       //image is passed and for that role besomes must in open ai [chat comp + response]
-      messages,
       model,
+      messages,
     });
 
     console.log(response.choices[0].message.content);
   } else if (model.includes("gemini")) {
     const contents = [
       //in array you can have data in several formats
-      ...(prompt && prompt.length > 0 ? [{ text: prompt }] : []),
-      ...(image && image.length > 0 ? [await getInlineImagePart(image)] : []),
-      ...(video && video.length > 0 ? [await getInlineVideoPart(video)] : []),
-      ...(audio && audio.length > 0 ? [await getInlineAudioPart(audio)] : []),
-      ...(document && document.length > 0
-        ? [await getInlineDocumentPart(document)]
-        : []),
+      ...(prompt?.length > 0 ? [{ text: prompt }] : []),
+      ...(image?.length > 0 ? [await getInlineImagePart(image, "")] : []),
+      ...(video?.length > 0 ? [await getInlineVideoPart(video)] : []),
+      ...(audio?.length > 0 ? [await getInlineAudioPart(audio)] : []),
+      ...(document?.length > 0 ? [await getInlineDocumentPart(document)] : []),
     ];
 
     const response =
@@ -230,8 +234,6 @@ async function useLLM({
             }), //in object literals always in key:value that is why ternary treated as an floating expression(any line of code that evaluates to something)
           });
 
-    console.log("content", contents);
-
     // for await (const chunk of response) {
     //   console.log(chunk.text);
     // }
@@ -244,16 +246,39 @@ async function useLLM({
 //   model: "gemini-2.0-flash",
 //   prompt: "What model is it",
 // });
+
+// await useLLM({
+//   model: "gpt-4.1-mini",
+//   prompt: "What model is it",
+//   systemPrompt: "hi",
+// });
 // console.log(
-// "-----------------------------------------------------------------"
+//   "-----------------------------------------------------------------"
 // );
 // x--------- text generation with [image input + text] or just an [image input]---------x
 // x--------- image file, url, base64 encoded strings ---------x
 // await useLLM({
+//   model: "gpt-4.1-mini",
+//   prompt: "what image is it?",
+//   image: "image.png",
+// });
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// await useLLM({
 //   model: "gemini-2.0-flash",
 //   prompt: "what image is it?",
 //   systemPrompt: "You are an image describer",
-//   image: "file_example_TIFF_1MB.tiff",
+//   image: "image.png",
+// });
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// await useLLM({
+// model: "gpt-4.1-mini",
+// prompt: "what image is it?",
+//   image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm29icQ1wHIEPDBWlUyT3F7X6jiwXgfHsq8Q&s",
+//   detail: "low"
 // });
 // console.log(
 //   "-----------------------------------------------------------------"
@@ -262,7 +287,17 @@ async function useLLM({
 // model: "gemini-2.0-flash",
 // prompt: "what image is it?",
 //   systemPrompt: "You are an image describer",
-//   image: "https://cdn.britannica.com/47/3347-050-9484DAB7/Pakistan-map-boundaries-cities-locator.jpg"
+//   image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm29icQ1wHIEPDBWlUyT3F7X6jiwXgfHsq8Q&s"
+// });
+// console.log(
+//   "-----------------------------------------------------------------"
+// );
+// await useLLM({
+//   model: "gpt-4.1-mini",
+//   prompt: "what image is it?",
+//   image: fs.readFileSync("Screenshot 2025-07-17 at 5.35.40 PM.png", {
+//     encoding: "base64",
+//   }),
 // });
 // console.log(
 //   "-----------------------------------------------------------------"

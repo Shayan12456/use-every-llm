@@ -174,7 +174,7 @@ console.log(response.text);
 
 ## ⚠️ Notes
 
-- **Server-only keys:** Always load API keys from environment variables. Don’t hardcode secrets in client-side code.  
+<!-- - **Server-only keys:** Always load API keys from environment variables. Don’t hardcode secrets in client-side code.   -->
 - **Node vs Browser:** Local file paths (`.png`, `.mp4`, `.pdf`) work in **Node.js** only. In Browser/Edge, use URLs or Base64.  
 - **Models:** Pass any supported OpenAI (`gpt-*`, `gpt-4o-mini`) or Gemini (`gemini-*`) model string.
 
@@ -182,4 +182,4 @@ console.log(response.text);
 
 ## 📜 License
 
-MIT © 2025 Your Name
+MIT © 2025 Shayan

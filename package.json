@@ -1,0 +1,70 @@
+{
+  "name": "use-every-llm",
+  "version": "1.0.5",
+  "description": "A unified API wrapper to use OpenAI & Gemini from any runtime (Node, Browser, Edge, Bun, Deno).",
+  "license": "MIT",
+  "author": "Your Name or Handle",
+  "homepage": "https://github.com/yourname/use-every-llm",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourname/use-every-llm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourname/use-every-llm/issues"
+  },
+  "type": "module",
+  "main": "index.cjs",
+  "module": "index.esm.js",
+  "exports": {
+    ".": {
+      "browser": "./index.browser.js",
+      "edge-light": "./index.edge.js",
+      "import": "./index.esm.js",
+      "require": "./index.cjs",
+      "default": "./index.esm.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.esm.js",
+    "index.cjs",
+    "index.browser.js",
+    "index.edge.js",
+    "runtime.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "llm",
+    "ai",
+    "openai",
+    "gemini",
+    "multi-llm",
+    "use-every-llm",
+    "universal",
+    "esm",
+    "cjs",
+    "edge"
+  ],
+  "scripts": {
+    "test": "node -e \"import('./index.esm.js').then(m=>console.log('esm',!!m.default)); const c=require('./index.cjs'); console.log('cjs',!!c.default)\"",
+    "lint": "eslint .",
+    "prepublishOnly": "echo prepublish checks skipped"
+  },
+  "dependencies": {
+    "@google/genai": "^1.17.0",
+    "openai": "^5.20.0",
+    "undici": "^6.19.8"
+  },
+  "peerDependenciesMeta": {
+    "@google/genai": {
+      "optional": true
+    },
+    "openai": {
+      "optional": true
+    }
+  }
+}

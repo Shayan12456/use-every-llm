@@ -1,16 +1,16 @@
 {
   "name": "use-every-llm",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A unified API wrapper to use OpenAI & Gemini from any runtime (Node, Browser, Edge, Bun, Deno).",
   "license": "MIT",
   "author": "Your Name or Handle",
-  "homepage": "https://github.com/yourname/use-every-llm",
+  "homepage": "https://use-every-llm-site-six.vercel.app",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourname/use-every-llm.git"
+    "url": "git+https://github.com/Shayan12456/use-every-llm.git"
   },
   "bugs": {
-    "url": "https://github.com/yourname/use-every-llm/issues"
+    "url": "https://github.com/Shayan12456/use-every-llm/issues"
   },
   "type": "module",
   "main": "index.cjs",

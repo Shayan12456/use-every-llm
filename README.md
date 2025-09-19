@@ -3,6 +3,11 @@
 **One function to call any LLM.**  
 Supports **OpenAI** and **Gemini** models in **Node, Browser, Edge, Bun, and Deno** with the same API.
 
+[![npm version](https://img.shields.io/npm/v/use-every-llm)](https://www.npmjs.com/package/use-every-llm)
+[![npm downloads](https://img.shields.io/npm/dw/use-every-llm)](https://www.npmjs.com/package/use-every-llm)
+[![GitHub stars](https://img.shields.io/github/stars/yourname/use-every-llm?style=social)](https://github.com/yourname/use-every-llm)
+
+
 ---
 
 ## 🚀 Installation

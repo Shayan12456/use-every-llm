@@ -5,8 +5,7 @@ Supports **OpenAI** and **Gemini** models in **Node, Browser, Edge, Bun, and Den
 
 [![npm version](https://img.shields.io/npm/v/use-every-llm)](https://www.npmjs.com/package/use-every-llm)
 [![npm downloads](https://img.shields.io/npm/dw/use-every-llm)](https://www.npmjs.com/package/use-every-llm)
-[![GitHub stars](https://img.shields.io/github/stars/yourname/use-every-llm?style=social)](https://github.com/Shayan12456/use-every-llm)
-
+[![GitHub stars](https://img.shields.io/github/stars/Shayan12456/use-every-llm?style=social)](https://github.com/Shayan12456/use-every-llm)
 
 ---
 

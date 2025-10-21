@@ -1,6 +1,6 @@
 {
   "name": "use-every-llm",
-  "version": "1.0.9",
+  "version": "1.1.1",
   "description": "A unified API wrapper to use OpenAI & Gemini from any runtime (Node, Browser, Edge, Bun, Deno).",
   "license": "MIT",
   "author": "Your Name or Handle",

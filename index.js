@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
+import 'dotenv/config'
 
 // runtime detection
 const isNode =
